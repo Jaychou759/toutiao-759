@@ -7,12 +7,11 @@
 <script>
 import axios from '@/utils/request'
 export default {
-  created(){
+  created() {
     console.dir(axios)
-  }
+  },
+  methods: {}
 }
 </script>
 
-<style scoped lang="less">
-
-</style>
+<style scoped lang="less"></style>

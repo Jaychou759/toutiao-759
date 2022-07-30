@@ -1,9 +1,9 @@
 export const mobileRules = [
-    { required: true, message: '请填写手机号'},
-    {pattern: /^1[0-9]\d{9}$/,message:'请输入11位手机号'}
+  { required: true, message: '请填写手机号' },
+  { pattern: /^1[0-9]\d{9}$/, message: '请输入11位手机号' }
 ]
 
 export const codeRules = [
-    { required: true, message: '请填写验证码' },
-    {pattern: /^[0-9]{6}$/, message:'请输入6位数字验证码'}
+  { required: true, message: '请填写验证码' },
+  { pattern: /^[0-9]{6}$/, message: '请输入6位数字验证码' }
 ]
