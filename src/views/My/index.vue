@@ -3,7 +3,7 @@
     <!-- 头部区域 -->
     <header>
       <div class="login" v-if="isLogin">登录后的盒子</div>
-      <div class="logout" v-else>未登录盒子</div>
+      <div class="logout" v-else></div>
     </header>
 
     <!-- 中间 -->
@@ -34,4 +34,11 @@ export default {
 }
 </script>
 
-<style></style>
+<style scoped lang="less">
+.logout {
+  width: 100%;
+  height: 401px;
+	background-color: #3296fa;
+	opacity: 0.7;
+}
+</style>
