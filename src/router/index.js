@@ -7,10 +7,7 @@ Vue.use(VueRouter)
 //当转换路径时候再去请求页面,懒加载页面
 //优化首屏加载速度
 const routes = [
-  {
-    path: '/login',
-    component: () => import('@/views/Login')
-  },
+  { name: 'login', path: '/login', component: () => import('@/views/Login') },
   {
     //如果子路由的path 没有/ 那么会把父亲path和儿子path拼接
     //如果子路由的path 有/ 不会拼接

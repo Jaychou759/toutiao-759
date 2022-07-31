@@ -1,5 +1,5 @@
 import request from '@/utils/request'
-
+import store from '@/store'
 //axios做了封装,post请求 自动加Content-Type	 	application/json
 //params 查询参数传参: 'baseURL+/v1_0/authorizations?name=张三'
 //data请求体传参:请求体当中携带
@@ -28,5 +28,14 @@ export const login = (mobile, code) => {
 export const getCodeAPI = (mobile) => {
   return request({
     url: `/v1_0/sms/codes/${mobile}`
+  })
+}
+
+export const getUserInfo = () => {
+  return request({
+    url: '/v1_0/user',
+    headers: {
+      Authorization: 'Bearer ' + store.state.tokenObj.token
+    }
   })
 }

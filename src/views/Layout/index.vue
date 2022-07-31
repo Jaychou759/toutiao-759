@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="layout">
     <router-view></router-view>
     <van-tabbar route>
       <van-tabbar-item v-for="(item,index) in tabbarData" :key="index" :to="item.to">
@@ -44,6 +44,7 @@ export default {
 </script>
 
 <style scoped lang="less">
+
 :deep(.van-tabbar-item__icon) {
   display: flex;
   flex-direction: column;
