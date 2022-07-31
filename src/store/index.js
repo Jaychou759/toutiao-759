@@ -26,7 +26,7 @@ export default new Vuex.Store({
       // localStorage.setItem('HEIMA_TOUTIAO_TOKEN', JSON.stringify(payload))
       // storage.set('HEIMA_TOUTIAO_TOKEN',payload)
       setToken(payload)
-    }
+    },
   },
   actions: {},
   modules: {}
