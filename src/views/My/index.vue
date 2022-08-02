@@ -124,7 +124,7 @@ export default {
         const res = await getUserInfo()
         console.log(res)
         this.userInfo = res.data.data
-        this.$toast.success('登录成功')
+        // this.$toast.success('登录成功')
       } catch (e) {
         const status = e.response.status
         let message = '获取数据失败,请稍后重试'
@@ -248,7 +248,7 @@ export default {
     }
   }
   button {
-    width: 116px;
+    width: 120px;
     height: 33px;
     margin-right: 33px;
     background-color: #ffffff;
