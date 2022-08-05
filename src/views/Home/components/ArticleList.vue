@@ -76,7 +76,7 @@ export default {
           this.isFinished = true
         }
         //2.存储数据
-        if ((this.refreshing = true)) {
+        if ((this.refreshing == true)) {
           this.articleList.unshift(...data.data.results)
         }
         this.articleList.push(...data.data.results)
