@@ -2,7 +2,7 @@ import axios from 'axios'
 import store from '@/store'
 const request = axios.create({
   baseURL: 'http://toutiao.itheima.net',
-  timeout: 5000
+  timeout: 10000
 })
 
 // 添加请求拦截器

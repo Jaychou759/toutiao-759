@@ -31,11 +31,50 @@ export const getCodeAPI = (mobile) => {
   })
 }
 
+/**
+ * 获取用户自己信息
+ * @returns
+ */
 export const getUserInfo = () => {
   return request({
     url: '/v1_0/user',
     headers: {
       Authorization: 'Bearer ' + store.state.tokenObj.token
     }
+  })
+}
+
+/**
+ * 获取用户个人资料
+ * @returns
+ */
+export const getUser = () => {
+  return request({
+    url: '/v1_0/user/profile'
+  })
+}
+
+export const editUserInfo = (data) => {
+  return request({
+    url: '/v1_0/user/profile',
+    method: 'PATCH',
+    data
+  })
+}
+
+// 修改用户图片
+// 如果说的传的是对象，axios会默认的将对象转化称为json 并且默认的会加上content-type:application/json
+// 如果说后端需要的数据是multipart/form-data，那么也就是说后端需要的是表单数据
+// 表单数据的处理
+// const fm = new FormData()
+// fm.append(表单的name,表单项)
+
+export const uploadAvator = (file) => {
+  const fm = new FormData()
+  fm.append('photo', file)
+  return request({
+    url: '/v1_0/user/photo',
+    method: 'PATCH',
+    data: fm
   })
 }

@@ -9,7 +9,7 @@
             <img :src="userInfo.photo" />
             <span>{{ userInfo.name }}</span>
           </div>
-          <button>编辑资料</button>
+          <button @click="$router.push('/user')">编辑资料</button>
         </div>
 
         <div class="login-bottom">

@@ -3,7 +3,13 @@
     <!-- 头部搜索 -->
     <van-nav-bar class="navbar">
       <template #title>
-        <van-button class="search-btn" round icon="search">搜索</van-button>
+        <van-button
+          class="search-btn"
+          round
+          icon="search"
+          @click="$router.push('/search')"
+          >搜索</van-button
+        >
       </template>
     </van-nav-bar>
 
@@ -33,7 +39,13 @@
 </template>
 
 <script>
-import { getMyChannel, delChannel, addChannel,setMyChannelsTolocal,getMyChannelsBylocal } from '@/api'
+import {
+  getMyChannel,
+  delChannel,
+  addChannel,
+  setMyChannelsTolocal,
+  getMyChannelsBylocal
+} from '@/api'
 import ArticleList from './components/ArticleList.vue'
 import ChannelPopup from './components/ChannelPopup'
 export default {
@@ -49,22 +61,22 @@ export default {
   created() {
     this.initMyChannels()
   },
-  computed:{
-    isLogin(){
+  computed: {
+    isLogin() {
       return !!this.$store.state.tokenObj.token
     }
   },
   methods: {
     //初始化mychannels数据
-    initMyChannels(){
-      if(this.isLogin) {
+    initMyChannels() {
+      if (this.isLogin) {
         //用户登录了
         //-发送请求获取mychannels数据
         this.getChannel()
       } else {
         //用户未登录
         const myChannels = getMyChannelsBylocal()
-        if(myChannels) {
+        if (myChannels) {
           //-本地存储有mychannels数据,从本地拿mychannels
           this.channelList = myChannels
         } else {
@@ -91,14 +103,13 @@ export default {
       })
       try {
         const newChannels = this.channelList.filter((item) => item.id != id)
-        if(this.isLogin) {
+        if (this.isLogin) {
           //1.删除服务器的数据
           await delChannel(id)
         } else {
           setMyChannelsTolocal(newChannels)
         }
-        
-        
+
         // console.log(data)
 
         //2.删除页面上的数据
@@ -117,12 +128,11 @@ export default {
         forbidClick: true
       })
       try {
-        if(this.isLogin) {
+        if (this.isLogin) {
           await addChannel(channel.id, this.channelList.length)
         } else {
-          setMyChannelsTolocal([...this.channelList,channel])
+          setMyChannelsTolocal([...this.channelList, channel])
         }
-        
 
         this.channelList.push(channel)
         this.$toast.success('添加频道成功')
