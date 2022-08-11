@@ -12,3 +12,19 @@ export const getSearchSuggestionAPI = (q) => {
         params: {q}
     })
 }
+
+
+
+/**
+ * 获取搜索结果
+ * @param {*} page 页数，不传默认为1
+ * @param {*} per_page 每页数量，不传每页数量由后端决定
+ * @param {*} q 搜索关键词
+ * @returns Promise
+ */
+export const getSearchResultAPI = params => {
+    return request({
+        url: '/v1_0/search',
+        params
+    })
+}

@@ -43,6 +43,11 @@ const routes = [
     path: '/user',
     component: () => import('@/views/User')
   },
+  {
+    path: '/article/:articleId',
+    component: () => import('@/views/Article'),
+    props:true
+  },
 ]
 
 const router = new VueRouter({

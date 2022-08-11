@@ -15,13 +15,19 @@
       </van-search>
     </form>
 
-
     <!-- 搜索历史/建议/结果 -->
     <!-- <SearchHistory></SearchHistory>
     <SearchSuggestion></SearchSuggestion>
     <SearchResult></SearchResult> -->
 
-    <component :is="componentName" :keywords="keywords"></component>
+    <component
+      :is="componentName"
+      :keywords="keywords"
+      @keyFn="onSearch"
+      :searchHistoryList="searchHistoryList"
+      @search="onSearch"
+      @delAll="searchHistoryList = []"
+    ></component>
   </div>
 </template>
 
@@ -29,41 +35,54 @@
 import SearchHistory from './components/SearchHistory.vue'
 import SearchSuggestion from './components/SearchSuggestion.vue'
 import SearchResult from './components/SearchResult.vue'
+import storage from '@/utils/storage'
 export default {
   name: 'Search',
   data() {
     return {
       keywords: '',
       //用于记录用户是否搜索了
-      isShowSearchResult:false
+      isShowSearchResult: false,
+      searchHistoryList: storage.get('TOKEN_SEARCH_HISTORYS') || []
+    }
+  },
+  watch:{
+    searchHistoryList(val){
+      storage.set('TOKEN_SEARCH_HISTORYS',val)
     }
   },
   methods: {
-    onSearch() {
-      console.log('正在搜索')
+    onSearch(val) {
+      // console.log('正在搜索')
+      this.keywords = val
+      const index = this.searchHistoryList.indexOf(val)
+      if (index !== -1) {
+        this.searchHistoryList.splice(index, 1)
+      }
+      this.searchHistoryList.unshift(val)
       this.isShowSearchResult = true
     },
-    onSearchFocus(){
-        //如果keywords为'' 显示搜索历史
-        //如果keywords有值,显示搜索建议
-        this.isShowSearchResult = false
+    onSearchFocus() {
+      //如果keywords为'' 显示搜索历史
+      //如果keywords有值,显示搜索建议
+      this.isShowSearchResult = false
     }
   },
-  computed:{
-    componentName(){
-        //如果输入的是空字符串那么渲染搜索历史
-        if(this.keywords === '') {
-            return 'SearchHistory'
-        }
-        // 当isShowSearchResult为true的时候，说明用户按下搜索键，那么渲染搜索结果
-        if (this.isShowSearchResult) {
-            return 'SearchResult'
-        }
-        // 既不现实搜索历史，也不显示搜索结果
-        return 'SearchSuggestion'
+  computed: {
+    componentName() {
+      //如果输入的是空字符串那么渲染搜索历史
+      if (this.keywords === '') {
+        return 'SearchHistory'
+      }
+      // 当isShowSearchResult为true的时候，说明用户按下搜索键，那么渲染搜索结果
+      if (this.isShowSearchResult) {
+        return 'SearchResult'
+      }
+      // 既不现实搜索历史，也不显示搜索结果
+      return 'SearchSuggestion'
     }
   },
-  components:{SearchHistory,SearchSuggestion,SearchResult}
+  components: { SearchHistory, SearchSuggestion, SearchResult }
 }
 </script>
 

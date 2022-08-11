@@ -9,11 +9,9 @@
       @click-right="onUpdateName"
     />
 
-
     <!-- 输入框 -->
     <van-field
-      v-model.trim="message"
-      rows="2"
+      v-model="message"
       autosize
       type="textarea"
       maxlength="11"
@@ -24,31 +22,39 @@
 </template>
 
 <script>
-import {editUserInfo} from '@/api'
+import { editUserInfo } from '@/api'
 export default {
-  props:{
-    name:{
-      type:String,
-      required:true,
+  props: {
+    value: {
+      type: String,
+      required: true
     }
   },
-  data(){
+  data() {
     return {
-      message:this.name
+      message: this.value
     }
   },
-  created(){
-    this.onUpdateName()
-  },
-  methods:{
-    async onUpdateName(){
-      const {data} = await editUserInfo({
-        name:this.message
+  methods: {
+    async onUpdateName() {
+      this.$toast.loading({
+        message: '保存中...',
+        forbidClick: true
       })
 
-      this.$emit('updateName',this.message)
+      try {
+        await editUserInfo({
+          name: this.message
+        })
 
-      this.$emit('close')
+        this.$emit('updateName', this.message)
+
+        this.$emit('close')
+
+        this.$toast.success('更新成功')
+      } catch (e) {
+        this.$toast.fail('更新失败')
+      }
     }
   }
 }

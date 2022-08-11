@@ -78,3 +78,32 @@ export const uploadAvator = (file) => {
     data: fm
   })
 }
+
+
+/**
+ * 关注用户
+ * @param {*} target 用户id
+ * @returns 
+ */
+
+export const addFollows = (target) => {
+  return request({
+    url: '/v1_0/user/followings',
+    method: 'POST',
+    data: {
+      target
+    }
+  })
+}
+
+/**
+ * 取消关注
+ * @param {*} target 用户id
+ * @returns 
+ */
+export const delFollows = (target) => {
+  return request({
+    url: `/v1_0/user/followings/${target}`,
+    method: 'DELETE',
+  })
+}

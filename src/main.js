@@ -7,8 +7,15 @@ import Vant from 'vant'
 import 'vant/lib/index.css'
 import 'amfe-flexible/index.min.js'
 import '@/style/index.css'
+import './utils/dayjs'
+
+
 Vue.use(Vant)
 Vue.config.productionTip = false
+
+// 兄弟组件传递参数
+const EventBus = new Vue()
+Vue.prototype.$EventBus = EventBus
 
 new Vue({
   router,

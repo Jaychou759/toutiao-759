@@ -1,36 +1,35 @@
 <template>
   <div>
-    <van-picker
-      title="更新性别"
-      show-toolbar
-      :columns="columns"
+    <van-datetime-picker
+      v-model="currentDate"
+      type="date"
+      title="选择年月日"
+      :min-date="minDate"
+      :max-date="maxDate"
+      @cancel="$parent.$parent.isShowBirthday = false"
       @confirm="onConfirm"
-      @cancel="$emit('close')"
-      @change="onChange"
-      :default-index="value"
     />
   </div>
 </template>
 
 <script>
 import { editUserInfo } from '@/api'
+import dayjs from 'dayjs'
 export default {
   props: {
     value: {
-      type: Number,
+      type: String,
       required: true
     }
   },
   data() {
     return {
-      columns: ['男', '女'],
-      localGender: this.value
+      minDate: new Date(1900, 1, 1),
+      maxDate: new Date(),
+      currentDate: new Date(this.value)
     }
   },
   methods: {
-    onChange(picker, value, index) {
-      this.localGender = index
-    },
     async onConfirm() {
       this.$toast.loading({
         message: '保存中...',
@@ -38,12 +37,13 @@ export default {
       })
 
       try {
+        const currentDate = dayjs(this.currentDate).format('YYYY-MM-DD')
         await editUserInfo({
-          gender: this.localGender
+          birthday: currentDate
         })
+        this.$emit('updateBirthday', currentDate)
 
-        this.$emit('close')
-        this.$emit('updateSex', this.localGender)
+        this.$parent.$parent.isShowBirthday = false
 
         this.$toast.success('更新成功')
       } catch (e) {

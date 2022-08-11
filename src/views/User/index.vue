@@ -23,7 +23,7 @@
     <van-cell title="性别" is-link @click="isShowSex = true">
       <span>{{ userInfo.gender === 0 ? '男' : '女' }}</span>
     </van-cell>
-    <van-cell title="生日" is-link>
+    <van-cell title="生日" is-link @click="isShowBirthday = true">
       <span>{{ userInfo.birthday }}</span>
     </van-cell>
     <!-- 头像的弹层 -->
@@ -34,7 +34,11 @@
       closeable
       position="bottom"
     >
-      <update-avator :photo="photo" v-if="isShowAvator" @update-avator="userInfo.photo = $event"></update-avator>
+      <update-avator
+        :photo="photo"
+        v-if="isShowAvator"
+        @update-avator="userInfo.photo = $event"
+      ></update-avator>
     </van-popup>
 
     <!-- 昵称弹层 -->
@@ -45,9 +49,10 @@
       position="bottom"
     >
       <update-name
-        @close="isShowName = false"
-        :name="userInfo.name"
+        v-if="isShowName"
+        v-model="userInfo.name"
         @updateName="userInfo.name = $event"
+        @close="isShowName = false"
       ></update-name>
     </van-popup>
 
@@ -56,9 +61,28 @@
       class="sex-popup"
       v-model="isShowSex"
       :style="{ height: '25%', width: '100%' }"
-       position="bottom"
+      position="bottom"
     >
-      <update-sex></update-sex>
+      <update-sex
+        v-if="isShowSex"
+        @close="isShowSex = false"
+        v-model="userInfo.gender"
+        @updateSex="userInfo.gender = $event"
+      ></update-sex>
+    </van-popup>
+
+    <!-- 生日弹层 -->
+    <van-popup
+      class="birthday-popup"
+      v-model="isShowBirthday"
+      :style="{ height: '25%', width: '100%' }"
+      position="bottom"
+    >
+      <update-birthday
+        v-if="isShowBirthday"
+        v-model="userInfo.birthday"
+        @updateBirthday="userInfo.birthday = $event"
+      ></update-birthday>
     </van-popup>
   </div>
 </template>
@@ -68,15 +92,17 @@ import { getUser } from '@/api'
 import UpdateAvator from './components/UpdateAvator.vue'
 import UpdateName from './components/UpdateName.vue'
 import UpdateSex from './components/UpdateSex.vue'
-import {resolveToBase64} from '@/utils/index'
+import UpdateBirthday from './components/UpdateBirthday.vue'
+import { resolveToBase64 } from '@/utils/index'
 export default {
   data() {
     return {
       userInfo: {},
       isShowAvator: false,
       isShowName: false,
-      isShowSex:false,
-      photo:''
+      isShowSex: false,
+      photo: '',
+      isShowBirthday: false
     }
   },
   created() {
@@ -119,7 +145,7 @@ export default {
       this.isShowAvator = true
     }
   },
-  components: { UpdateAvator, UpdateName ,UpdateSex}
+  components: { UpdateAvator, UpdateName, UpdateSex, UpdateBirthday }
 }
 </script>
 

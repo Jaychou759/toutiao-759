@@ -70,19 +70,19 @@ export default {
         // }
         //1.发送请求
         const { data } = await getArticlesAPI(this.id, this.pre_timestamp)
-
+        const timestamp = data.data.pre_timestamp
         //判断是否加载完成
         if (data.data.pre_timestamp === null) {
           this.isFinished = true
         }
         //2.存储数据
-        if ((this.refreshing == true)) {
+        if ((this.refreshing)) {
           this.articleList.unshift(...data.data.results)
         }
         this.articleList.push(...data.data.results)
 
         //3.更新时间戳
-        this.pre_timestamp = data.data.pre_timestamp
+        this.pre_timestamp = timestamp
       } catch (e) {
         this.error = true
       } finally {
